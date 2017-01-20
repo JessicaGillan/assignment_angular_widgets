@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Widgets" ng-controller="restaurant">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photo Widget</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
+    <script src="controller.restaurant.js" charset="utf-8"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <label>
+      name: <input type="text" ng-model="name">
+    </label>
+    <label>
+      food type: <input type="text" ng-model="foodType">
+    </label>
+    <button type="button" ng-click="createRestaurant()">Create Restaurant</button>
+    <br>
+    <table ng-if="restaurants.length">
+        <thead>
+          <tr>
+          <th>Name</th>
+          <th>Food Type</th>
+          <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="restaurant in restaurants | orderBy:'foodType'">
+            <td>{{ restaurant.name }}</td>
+            <td>{{ restaurant.foodType }}</td>
+            <td> <a href="#" ng-click="removeRestaurant(restaurant)">Delete</a> </td>
+          </tr>
+        </tbody>
+    </table>
+  </body>
+</html>
