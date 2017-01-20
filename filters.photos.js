@@ -14,14 +14,24 @@ widgets.filter('photoFilterFilter', function() {
 });
 
 widgets.filter('photoHashtagFilter', function() {
-  return function(images, igFilter) {
-    if (!igFilter) { return images; }
+  return function(images, igHashtags) {
+    if (!igHashtags) { return images; }
     var filteredImages = [];
+    var hashtags = {}
+
+    for(var i = 0; i < igHashtags.length; i++){
+      hashtags[igHashtags[i]] = true;
+    }
 
     angular.forEach(images, function(image) {
-      if (image.tags.indexOf(igFilter) > -1) {
-        filteredImages.push(image);
+      var include = false;
+      for(var i = 0; i < image.tags.length; i++){
+        if(hashtags[image.tags[i]]){
+          include = true;
+          break;
+        }
       }
+      if(include) filteredImages.push(image);
     });
 
     return filteredImages;

@@ -34,7 +34,7 @@
           <select ng-if="filters.length"
                   ng-model="filterFilter"
                   ng-options="filter for filter in filters"
-                  ng-change="setFilterFilter(selectedFilter)">
+                  ng-change="setFilterFilter(filterFilter)">
           </select>
           <select ng-if="hashtags.length"
                   ng-model="hashtagFilter"
