@@ -4,9 +4,32 @@ widgets.controller("PhotoCtrl",
     function($scope, $photoFilter){
       $scope.rawFeed = instagramResponse;
       $scope.images = $scope.rawFeed.data;
-      $scope.page = 1;
-      $scope.start = 0;
+      $scope.page = 0;
+      $scope.start = 0 ;
       $scope.PAGE_LENGTH = 12;
+      $scope.availImages = 0;
+
+      $scope.nextPage = function nextPage(){
+        if(!$scope.lastPage()) {
+          $scope.page += 1;
+          $scope.setStart();
+        }
+      }
+
+      $scope.previousPage = function previousPage(){
+        if(!($scope.page === 0)) {
+          $scope.page -= 1;
+          $scope.setStart();
+        }
+      }
+
+      $scope.lastPage = function lastPage() {
+        return !($scope.availImages.length > (($scope.page + 1) * $scope.PAGE_LENGTH));
+      }
+
+      $scope.setStart = function setStart(){
+        $scope.start = $scope.page * $scope.PAGE_LENGTH;
+      }
 
       $scope.showData = function showData(image) {
         image.visible = true;

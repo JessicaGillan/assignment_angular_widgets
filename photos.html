@@ -42,6 +42,9 @@
                   ng-change="setHashtagFilter(hashtagFilter)" multiple="true">
         </select>
         <h4>{{ availImages.length || 0 }} Results Found</h4>
+        <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
+        ({{ page + 1 }})
+        <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
         </div>
       </div>
       <div class="row">
