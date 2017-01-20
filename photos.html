@@ -29,14 +29,27 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in images">
-          <a href="{{image.link}}"><img ng-src="{{image.images.standard_resolution.url}}" class="img-responsive" ng-mouseover="showImage(image)" ng-mouseleave="hideImage(image)"></a>
+        <div class="col-xs-12">
+          <select ng-if="filters.length" ng-model="selectedFilter">
+            <option ng-repeat=""></option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3" ng-repeat="image in images" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+          <a href="{{image.link}}"><img ng-src="{{image.images.standard_resolution.url}}" class="img-responsive"></a>
           <div ng-if="image.visible">
-            <div class="caption">Caption: {{ image.caption.text | limitTo:100 }}</div>
-            <div>User: {{ image.user.username }}</div>
+            <div class="hashtags">
+              <span ng-repeat="hashtag in image.tags">
+                <a href="http://instagram.com/explore/tags/{{hashtag}}">#{{ hashtag }}</a>
+              </span>
+            </div>
+            <div class="caption">Caption: {{ image.caption.text | limitTo:20 }}</div>
+            <div>User: <a href="http://instagram.com/{{ image.user.username }}">{{ image.user.username }}</a></div>
             <div>Datestamp: {{ image.created_time * 1000 | date:"medium" }}</div>
             <div>Likes: {{ image.likes.count }}</div>
             <div>Comments: {{ image.comments.count }}</div>
+            <div>Filter: {{ image.filter }}</div>
           </div>
         </div>
       </div>

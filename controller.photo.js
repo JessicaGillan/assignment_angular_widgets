@@ -4,12 +4,28 @@ widgets.controller("PhotoCtrl",
     function($scope){
       $scope.rawFeed = instagramResponse;
       $scope.images = $scope.rawFeed.data;
-      $scope.showImage = function showImage(imageData) {
-        imageData.visible = true;
+
+      $scope.showData = function showData(image) {
+        image.visible = true;
       };
-      $scope.hideImage = function hideImage(imageData) {
-        imageData.visible = false;
+
+      $scope.hideData = function hideData(image) {
+        image.visible = false;
       }
+
+      $scope.getFilters = function getFilters(){
+        var filters = {}
+        for(var i = 0; i < images.length; i++){
+          filters[images[i].filter] = ""
+        }
+        var filterArray = []
+        for(var filter in filters){
+          filterArray.push(filter)
+        }
+        return filterArray;
+      };
+
+      $scope.filters = getFilters();
     }
   ]
 )
