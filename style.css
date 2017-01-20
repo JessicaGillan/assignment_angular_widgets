@@ -1,3 +1,9 @@
 thead th {
   padding-right: 1em;
 }
+
+a {
+  cursor:pointer;
+  color: blue;
+  text-decoration: underline;
+}

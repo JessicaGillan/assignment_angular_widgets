@@ -24,28 +24,39 @@
       name: <input type="text" ng-model="name">
     </label>
     <label>
-      food type: <input type="text" ng-model="foodType">
+      food type: <input type="text" ng-model="type">
     </label>
     <label>
-      image: <input type="text" ng-model="imgAddr">
+      image: <input type="text" ng-model="img">
     </label>
     <button type="button" ng-click="createRestaurant()">Create Restaurant</button>
     <br>
+    <br>
+    <label>
+      Search Restaurants:<input type="text" ng-model="searchRestaurants"><br>
+    </label>
     <table ng-if="restaurants.length">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Food Type</th>
+          <th ng-click="sortRestaurants('name')">
+            <a>Name</a>
+            <span ng-if="restaurantOrder === 'name'">{{ (direction ? '&#8593;' : '&#8595;') }}
+            </span>
+          </th>
+          <th ng-click="sortRestaurants('type')">
+            <a>Food Type</a>
+            <span ng-if="restaurantOrder === 'type'">{{ (direction ? '&#8593;' : '&#8595;') }}<span>
+            </th>
           <th>Image</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="restaurant in restaurants | orderBy:'foodType'">
+        <tr ng-repeat="restaurant in restaurants | orderBy:restaurantOrder:direction | filter:searchRestaurants">
           <td>{{ restaurant.name }}</td>
-          <td>{{ restaurant.foodType }}</td>
-          <td><img ng-src="{{ restaurant.imgAddr }}"></td>
-          <td> <a href="#" ng-click="removeRestaurant(restaurant)">Delete</a> </td>
+          <td>{{ restaurant.type }}</td>
+          <td><img ng-if="restaurant.img" ng-src="{{ restaurant.img }}"></td>
+          <td> <a ng-click="removeRestaurant(restaurant)">Delete</a> </td>
         </tr>
       </tbody>
     </table>

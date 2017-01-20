@@ -2,9 +2,24 @@
 widgets.controller("RestaurantCtrl",
   ['$scope',
     function($scope){
-      $scope.restaurants = [];
+      $scope.restaurantOrder = 'type';
+      $scope.restaurants = [{
+        name: 'test1',
+        type: "crappy",
+        img: null
+      },
+      {
+        name: 'test2',
+        type: "better",
+        img: null
+      },
+      {
+        name: 'test3',
+        type: "half decent",
+        img: null
+      }];
       $scope.newRestaurant = function newRestaurant(){
-        return {name: "", foodType: "", imgAddr: ""};
+        return {name: "", type: "", imgAddr: ""};
       };
 
       var transferAttr = function transferAttr(newRest, attr_arr) {
@@ -17,7 +32,7 @@ widgets.controller("RestaurantCtrl",
       };
       $scope.createRestaurant = function createRestaurant(){
         var newRest = $scope.newRestaurant()
-        transferAttr(newRest, ['name', 'foodType', 'imgAddr']);
+        transferAttr(newRest, ['name', 'type', 'imgAddr']);
         $scope.restaurants.push(newRest);
       };
 
@@ -27,6 +42,15 @@ widgets.controller("RestaurantCtrl",
             $scope.restaurants.splice(i, 1);
             return
           }
+        }
+      };
+
+      $scope.sortRestaurants = function sortRestaurants(column){
+        if($scope.restaurantOrder === column){
+          $scope.direction = !$scope.direction
+        } else {
+          $scope.direction = false;
+          $scope.restaurantOrder = column;
         }
       };
     }
