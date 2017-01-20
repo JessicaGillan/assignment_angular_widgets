@@ -27,6 +27,10 @@ widgets.controller("PhotoCtrl",
         return !($scope.availImages.length > (($scope.page + 1) * $scope.PAGE_LENGTH));
       }
 
+      $scope.pageCount = function pageCount() {
+        return Math.ceil($scope.availImages.length / $scope.PAGE_LENGTH);
+      }
+
       $scope.setStart = function setStart(){
         $scope.start = $scope.page * $scope.PAGE_LENGTH;
       }
@@ -38,18 +42,6 @@ widgets.controller("PhotoCtrl",
       $scope.hideData = function hideData(image) {
         image.visible = false;
       }
-
-      $scope.getFilters = function getFilters(){
-        var filters = {}
-        for(var i = 0; i < $scope.images.length; i++){
-          filters[$scope.images[i].filter] = "";
-        }
-        var filterArray = [''];
-        for(var filter in filters){
-          filterArray.push(filter);
-        }
-        return filterArray;
-      };
 
       $scope.getHashtags = function getHashtags(){
         var hashtags = {}
@@ -65,16 +57,42 @@ widgets.controller("PhotoCtrl",
         return hashtagArray;
       };
 
-      $scope.filters = $scope.getFilters();
-      $scope.hashtags = $scope.getHashtags();
-      $scope.filterFilter = "";
+      $scope.getUniq = function getUniq(prop, initialBlank) {
+        var items = {};
+        for(var i = 0; i < $scope.images.length; i++){
+          items[$scope.images[i][prop]] = "";
+        }
+        var itemArray = initialBlank ? [""] : [];
+        for(var item in items){
+          itemArray.push(item);
+        }
+        return itemArray;
+      };
 
-      $scope.setFilterFilter = function(filter) {
-        $scope.filterFilter = filter;
+      $scope.getUsers = function() {
+        var items = {};
+        for(var i = 0; i < $scope.images.length; i++){
+          items[$scope.images[i].user.username] = $scope.images[i].user;
+          console.log(items);
+        }
+        var itemArray = [];
+        for(var item in items){
+          itemArray.push(items[item]);
+        }
+        return itemArray;
+      };
+
+      $scope.filters = $scope.getUniq('filter', true);
+      $scope.hashtags = $scope.getHashtags();
+      $scope.users = $scope.getUsers();
+      $scope.filterSubset = "";
+
+      $scope.setFilterSubset = function(filter) {
+        $scope.filterSubset = filter;
       }
 
-      $scope.setHashtagFilter = function(filter) {
-        $scope.hashtagFilter = filter;
+      $scope.setHashtagSubset = function(hashtags) {
+        $scope.hashtagSubset = hashtags;
       }
     }
   ]

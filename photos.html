@@ -32,14 +32,14 @@
       <div class="row">
         <div class="col-xs-12">
           <select ng-if="filters.length"
-                  ng-model="filterFilter"
+                  ng-model="filterSubset"
                   ng-options="filter for filter in filters"
-                  ng-change="setFilterFilter(filterFilter)">
+                  ng-change="setFilterSubset(filterSubset)">
           </select>
           <select ng-if="hashtags.length"
-                  ng-model="hashtagFilter"
+                  ng-model="hashtagSubset"
                   ng-options="hashtag for hashtag in hashtags"
-                  ng-change="setHashtagFilter(hashtagFilter)" multiple="true">
+                  ng-change="setHashtagSubset(hashtagSubset)" multiple="true">
         </select>
       </div>
       <div class="row">
@@ -47,14 +47,14 @@
           <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
         </div>
         <div class="col-xs-4 text-center">
-          ({{ page + 1 }})
+          Page {{ page + 1 }} / {{ pageCount() }}
         </div>
         <div class="col-xs-4 text-right">
           <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterFilter | photoHashtagFilter:hashtagFilter) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterSubset | photoHashtagFilter:hashtagSubset ) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
           <a href="{{ image.link }}"><img ng-src="{{ image.images.standard_resolution.url }}" class="img-responsive"></a>
           <div ng-if="image.visible">
             <div class="hashtags">
@@ -76,10 +76,23 @@
           <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
         </div>
         <div class="col-xs-4 text-center">
-          ({{ page + 1 }})
+          Page {{ page + 1 }} / {{ pageCount() }}
         </div>
         <div class="col-xs-4 text-right">
           <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>Users</h2>
+          <div class="user row" ng-repeat="user in users">
+            <div class="col-xs-1">
+              <img class="img-responsive" ng-src="{{user.profile_picture}}" alt="">
+            </div>
+            <div class="col-xs-11">
+              <div class="username">{{ user.full_name || user.username }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
