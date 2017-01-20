@@ -12,8 +12,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
 
-    <script src="photos.js" charset="utf-8"></script>
     <script src="app.js" charset="utf-8"></script>
+    <script src="photoFilter.js"></script>
+    <script src="photos.js" charset="utf-8"></script>
     <script src="controller.photo.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="style.css">
@@ -30,13 +31,12 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
-          <select ng-if="filters.length" ng-model="selectedFilter">
-            <option ng-repeat=""></option>
+          <select ng-if="filters.length" ng-model="selectedFilter" ng-options="filter for filter in filters" ng-change="logFilter(this)">
           </select>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in images" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+        <div class="col-xs-3" ng-repeat="image in images | photoFilter:selectedFilter" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
           <a href="{{image.link}}"><img ng-src="{{image.images.standard_resolution.url}}" class="img-responsive"></a>
           <div ng-if="image.visible">
             <div class="hashtags">

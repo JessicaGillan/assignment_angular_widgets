@@ -1,7 +1,7 @@
 /* globals widgets */
 widgets.controller("PhotoCtrl",
   ['$scope',
-    function($scope){
+    function($scope, $photoFilter){
       $scope.rawFeed = instagramResponse;
       $scope.images = $scope.rawFeed.data;
 
@@ -15,17 +15,23 @@ widgets.controller("PhotoCtrl",
 
       $scope.getFilters = function getFilters(){
         var filters = {}
-        for(var i = 0; i < images.length; i++){
-          filters[images[i].filter] = ""
+        for(var i = 0; i < $scope.images.length; i++){
+          filters[$scope.images[i].filter] = "";
         }
-        var filterArray = []
+        var filterArray = [''];
         for(var filter in filters){
-          filterArray.push(filter)
+          filterArray.push(filter);
         }
         return filterArray;
       };
 
-      $scope.filters = getFilters();
+      $scope.filters = $scope.getFilters();
+
+      $scope.logFilter = function(_this) {
+        console.log(_this);
+        console.log($scope.selectedFilter);
+        $scope.selectedFilter = _this.selectedFilter;
+      }
     }
   ]
 )
