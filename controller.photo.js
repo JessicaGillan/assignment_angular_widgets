@@ -4,6 +4,9 @@ widgets.controller("PhotoCtrl",
     function($scope, $photoFilter){
       $scope.rawFeed = instagramResponse;
       $scope.images = $scope.rawFeed.data;
+      $scope.page = 1;
+      $scope.start = 0;
+      $scope.PAGE_LENGTH = 12;
 
       $scope.showData = function showData(image) {
         image.visible = true;

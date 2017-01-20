@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterFilter | photoHashtagFilter:hashtagFilter)" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterFilter | photoHashtagFilter:hashtagFilter) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
           <a href="{{ image.link }}"><img ng-src="{{ image.images.standard_resolution.url }}" class="img-responsive"></a>
           <div ng-if="image.visible">
             <div class="hashtags">
