@@ -26,6 +26,7 @@ widgets.controller("PhotoCtrl",
       };
 
       $scope.filters = $scope.getFilters();
+      $scope.selectedFilter = "";
 
       $scope.logFilter = function(_this) {
         console.log(_this);
