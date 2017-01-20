@@ -25,13 +25,30 @@ widgets.controller("PhotoCtrl",
         return filterArray;
       };
 
-      $scope.filters = $scope.getFilters();
-      $scope.selectedFilter = "";
+      $scope.getHashtags = function getHashtags(){
+        var hashtags = {}
+        for(var i = 0; i < $scope.images.length; i++){
+          for(var h = 0; h < $scope.images[i].tags.length; h++){
+            hashtags[$scope.images[i].tags[h]] = "";
+          }
+        }
+        var hashtagArray = [''];
+        for(var hashtag in hashtags){
+          hashtagArray.push(hashtag);
+        }
+        return hashtagArray;
+      };
 
-      $scope.logFilter = function(_this) {
-        console.log(_this);
-        console.log($scope.selectedFilter);
-        $scope.selectedFilter = _this.selectedFilter;
+      $scope.filters = $scope.getFilters();
+      $scope.hashtags = $scope.getHashtags();
+      $scope.filterFilter = "";
+
+      $scope.setFilterFilter = function(filter) {
+        $scope.filterFilter = filter;
+      }
+
+      $scope.setHashtagFilter = function(filter) {
+        $scope.hashtagFilter = filter;
       }
     }
   ]

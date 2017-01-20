@@ -12,9 +12,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
 
-    <script src="app.js" charset="utf-8"></script>
-    <script src="photoFilter.js"></script>
     <script src="photos.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
+    <script src="filters.photos.js"></script>
     <script src="controller.photo.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="style.css">
@@ -31,17 +31,25 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
-          <select ng-if="filters.length" ng-model="selectedFilter" ng-options="filter for filter in filters" ng-change="logFilter(this)">
+          <select ng-if="filters.length"
+                  ng-model="filterFilter"
+                  ng-options="filter for filter in filters"
+                  ng-change="setFilterFilter(selectedFilter)">
           </select>
+          <select ng-if="hashtags.length"
+                  ng-model="hashtagFilter"
+                  ng-options="hashtag for hashtag in hashtags"
+                  ng-change="setHashtagFilter(hashtagFilter)" multiple="true">
+        </select>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in images | photoFilter:selectedFilter" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
-          <a href="{{image.link}}"><img ng-src="{{image.images.standard_resolution.url}}" class="img-responsive"></a>
+        <div class="col-xs-3" ng-repeat="image in images | photoFilterFilter:filterFilter | photoHashtagFilter:hashtagFilter" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+          <a href="{{ image.link }}"><img ng-src="{{ image.images.standard_resolution.url }}" class="img-responsive"></a>
           <div ng-if="image.visible">
             <div class="hashtags">
               <span ng-repeat="hashtag in image.tags">
-                <a href="http://instagram.com/explore/tags/{{hashtag}}">#{{ hashtag }}</a>
+                <a href="http://instagram.com/explore/tags/{{ hashtag }}">#{{ hashtag }}</a>
               </span>
             </div>
             <div class="caption">Caption: {{ image.caption.text | limitTo:20 }}</div>
