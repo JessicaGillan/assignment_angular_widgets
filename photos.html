@@ -41,10 +41,16 @@
                   ng-options="hashtag for hashtag in hashtags"
                   ng-change="setHashtagFilter(hashtagFilter)" multiple="true">
         </select>
-        <h4>{{ availImages.length || 0 }} Results Found</h4>
-        <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
-        ({{ page + 1 }})
-        <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
+        </div>
+        <div class="col-xs-4 text-center">
+          ({{ page + 1 }})
+        </div>
+        <div class="col-xs-4 text-right">
+          <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
         </div>
       </div>
       <div class="row">
@@ -63,6 +69,17 @@
             <div>Comments: {{ image.comments.count }}</div>
             <div>Filter: {{ image.filter }}</div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <a ng-click="previousPage()" ng-if="!(page === 0)" >< Previous page</a>
+        </div>
+        <div class="col-xs-4 text-center">
+          ({{ page + 1 }})
+        </div>
+        <div class="col-xs-4 text-right">
+          <a ng-click="nextPage()" ng-if="!lastPage()" >Show next page ></a>
         </div>
       </div>
     </div>
