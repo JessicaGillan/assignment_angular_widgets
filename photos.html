@@ -14,6 +14,8 @@
 
     <script src="photos.js" charset="utf-8"></script>
     <script src="app.js" charset="utf-8"></script>
+    <script src="on-error.js" charset="utf-8"></script>
+    <script src="filters.app.js"></script>
     <script src="filters.photos.js"></script>
     <script src="controller.photo.js" charset="utf-8"></script>
 
@@ -54,7 +56,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterSubset | photoHashtagFilter:hashtagSubset ) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterSubset | photoHashtagFilter:hashtagSubset | photoUserFilter:userSubset ) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
           <a href="{{ image.link }}"><img ng-src="{{ image.images.standard_resolution.url }}" class="img-responsive"></a>
           <div ng-if="image.visible">
             <div class="hashtags">
@@ -85,12 +87,14 @@
       <div class="row">
         <div class="col-xs-12">
           <h2>Users</h2>
-          <div class="user row" ng-repeat="user in users">
-            <div class="col-xs-1">
-              <img class="img-responsive" ng-src="{{user.profile_picture}}" alt="">
-            </div>
-            <div class="col-xs-11">
-              <div class="username">{{ user.full_name || user.username }}</div>
+          <div class="users-scroll">
+            <div class="user row" ng-repeat="user in users" ng-click="setUserSubset(user)">
+              <div class="col-xs-1">
+                <img class="img-responsive" ng-src="{{user.profile_picture}}" alt="" on-error="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif">
+              </div>
+              <div class="col-xs-11">
+                <div class="username">{{ user.full_name || user.username }}</div>
+              </div>
             </div>
           </div>
         </div>

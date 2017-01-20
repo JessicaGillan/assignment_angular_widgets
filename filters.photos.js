@@ -38,11 +38,15 @@ widgets.filter('photoHashtagFilter', function() {
   }
 });
 
-widgets.filter('paginate', function() {
-  return function(items, start, length){
-    if(items.length < length) return items;
-
-    return items.slice(start, start + length);
+widgets.filter('photoUserFilter', function() {
+  return function(images, username) {
+    if (!username) { return images; }
+    var filteredImages = [];
+    for (var i = 0; i < images.length; i++) {
+      if (images[i].user.username === username) {
+        filteredImages.push(images[i]);
+      }
+    }
+    return filteredImages;
   }
-
-})
+});

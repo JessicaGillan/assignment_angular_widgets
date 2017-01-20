@@ -94,6 +94,10 @@ widgets.controller("PhotoCtrl",
       $scope.setHashtagSubset = function(hashtags) {
         $scope.hashtagSubset = hashtags;
       }
+
+      $scope.setUserSubset = function(user) {
+        $scope.userSubset = user.username;
+      }
     }
   ]
 )
