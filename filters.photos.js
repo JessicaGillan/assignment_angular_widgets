@@ -15,7 +15,7 @@ widgets.filter('photoFilterFilter', function() {
 
 widgets.filter('photoHashtagFilter', function() {
   return function(images, igHashtags) {
-    if (!igHashtags) { return images; }
+    if (!igHashtags || !igHashtags[0]) { return images; }
     var filteredImages = [];
     var hashtags = {}
 
