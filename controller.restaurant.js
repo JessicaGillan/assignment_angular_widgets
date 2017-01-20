@@ -1,19 +1,25 @@
-Widgets.controller("restaurant",
+/* globals widgets */
+widgets.controller("RestaurantCtrl",
   ['$scope',
     function($scope){
       $scope.restaurants = [];
       $scope.newRestaurant = function newRestaurant(){
-        return {name: "", foodType: ""}
-      }
+        return {name: "", foodType: "", imgAddr: ""};
+      };
 
+      var transferAttr = function transferAttr(newRest, attr_arr) {
+        console.log(newRest);
+        for (var i = 0; i < attr_arr.length; i++) {
+          newRest[attr_arr[i]] = $scope[attr_arr[i]];
+          $scope[attr_arr[i]] = null;
+        }
+        console.log(newRest);
+      };
       $scope.createRestaurant = function createRestaurant(){
         var newRest = $scope.newRestaurant()
-        newRest.name = $scope.name;
-        newRest.foodType = $scope.foodType;
+        transferAttr(newRest, ['name', 'foodType', 'imgAddr']);
         $scope.restaurants.push(newRest);
-        $scope.name = null;
-        $scope.foodType = null;
-      }
+      };
 
       $scope.removeRestaurant = function removeRestaurant(restaurant){
         for(var i = 0; i < $scope.restaurants.length; i++){
@@ -22,7 +28,7 @@ Widgets.controller("restaurant",
             return
           }
         }
-      }
+      };
     }
   ]
 )

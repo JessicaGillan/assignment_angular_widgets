@@ -1,1 +1,1 @@
-var Widgets = angular.module("Widgets", []);
+var widgets = angular.module("widgets", []);

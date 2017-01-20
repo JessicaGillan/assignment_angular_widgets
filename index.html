@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="Widgets" ng-controller="restaurant">
+<html lang="en" ng-app="widgets" ng-controller="RestaurantCtrl">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
     <script src="app.js" charset="utf-8"></script>
     <script src="controller.restaurant.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,23 +26,28 @@
     <label>
       food type: <input type="text" ng-model="foodType">
     </label>
+    <label>
+      image: <input type="text" ng-model="imgAddr">
+    </label>
     <button type="button" ng-click="createRestaurant()">Create Restaurant</button>
     <br>
     <table ng-if="restaurants.length">
-        <thead>
-          <tr>
+      <thead>
+        <tr>
           <th>Name</th>
           <th>Food Type</th>
+          <th>Image</th>
           <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="restaurant in restaurants | orderBy:'foodType'">
-            <td>{{ restaurant.name }}</td>
-            <td>{{ restaurant.foodType }}</td>
-            <td> <a href="#" ng-click="removeRestaurant(restaurant)">Delete</a> </td>
-          </tr>
-        </tbody>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="restaurant in restaurants | orderBy:'foodType'">
+          <td>{{ restaurant.name }}</td>
+          <td>{{ restaurant.foodType }}</td>
+          <td><img ng-src="{{ restaurant.imgAddr }}"></td>
+          <td> <a href="#" ng-click="removeRestaurant(restaurant)">Delete</a> </td>
+        </tr>
+      </tbody>
     </table>
   </body>
 </html>
