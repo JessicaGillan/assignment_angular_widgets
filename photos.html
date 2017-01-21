@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="widgets" ng-controller="PhotoCtrl">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Photo Widget</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Widget</title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
 
-    <script src="photos.js" charset="utf-8"></script>
-    <script src="app.js" charset="utf-8"></script>
-    <script src="on-error.js" charset="utf-8"></script>
-    <script src="filters.app.js"></script>
-    <script src="filters.photos.js"></script>
-    <script src="controller.photo.js" charset="utf-8"></script>
+  <script src="photos.js" charset="utf-8"></script>
+  <script src="app.js" charset="utf-8"></script>
+  <script src="on-error.js" charset="utf-8"></script>
+  <script src="filters.app.js"></script>
+  <script src="filters.photos.js"></script>
+  <script src="controller.photo.js" charset="utf-8"></script>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <select ng-if="filters.length"
-                  ng-model="filterSubset"
-                  ng-options="filter for filter in filters"
-                  ng-change="setFilterSubset(filterSubset)">
-          </select>
-          <select ng-if="hashtags.length"
-                  ng-model="hashtagSubset"
-                  ng-options="hashtag for hashtag in hashtags"
-                  ng-change="setHashtagSubset(hashtagSubset)" multiple="true">
-        </select>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-6">
+            <h2>Filters</h2>
+            <select ng-if="filters.length"
+            ng-model="filterSubset"
+            ng-options="filter for filter in filters"
+            ng-change="setFilterSubset(filterSubset)">
+            </select>
+          </div>
+          <div class="col-xs-6">
+            <h2>Hashtags</h2>
+            <select class="hashtag-select" ng-if="hashtags.length"
+              ng-model="hashtagSubset"
+              ng-options="hashtag for hashtag in hashtags"
+              ng-change="setHashtagSubset(hashtagSubset)" multiple="true">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <h2>Users</h2>
+        <div class="users-scroll">
+          <div class="user row" ng-repeat="user in users" ng-click="setUserSubset(user)">
+            <div class="col-xs-2">
+              <img class="img-responsive" ng-src="{{user.profile_picture}}" alt="" on-error="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif">
+            </div>
+            <div class="col-xs-10">
+              <div class="username">{{ user.full_name || user.username }}</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-xs-4">
@@ -56,9 +77,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3" ng-repeat="image in availImages = (images | photoFilterFilter:filterSubset | photoHashtagFilter:hashtagSubset | photoUserFilter:userSubset ) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
+        <div class="col-xs-3 img-cell" ng-repeat="image in availImages = (images | photoFilterFilter:filterSubset | photoHashtagFilter:hashtagSubset | photoUserFilter:userSubset ) | paginate:start:PAGE_LENGTH" ng-mouseover="showData(image)" ng-mouseleave="hideData(image)">
           <a href="{{ image.link }}"><img ng-src="{{ image.images.standard_resolution.url }}" class="img-responsive"></a>
-          <div ng-if="image.visible">
+          <div ng-if="image.visible" class="img-text">
             <div class="hashtags">
               <span ng-repeat="hashtag in image.tags">
                 <a href="http://instagram.com/explore/tags/{{ hashtag }}">#{{ hashtag }}</a>
@@ -85,20 +106,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
-          <h2>Users</h2>
-          <div class="users-scroll">
-            <div class="user row" ng-repeat="user in users" ng-click="setUserSubset(user)">
-              <div class="col-xs-1">
-                <img class="img-responsive" ng-src="{{user.profile_picture}}" alt="" on-error="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif">
-              </div>
-              <div class="col-xs-11">
-                <div class="username">{{ user.full_name || user.username }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </body>
-</html>
+  </html>

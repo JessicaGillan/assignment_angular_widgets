@@ -15,5 +15,19 @@ a {
 .users-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 200px;
+  height: 100px;
+}
+.hashtag-select {
+  max-width: 100%;
+}
+
+.img-cell {
+  position: relative;
+}
+.img-text {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);
+  z-index: 2;
+  top: 0;
+  max-width: 100%;
 }
